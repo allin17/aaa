@@ -97,7 +97,6 @@ const RealTimeCurrency = () => {
                                             flex: 1,
                                             fontSize: 16,
                                             top: 8,
-                                            right: 5
                                         }}>
                                             {item.ask}
                                         </Text>
