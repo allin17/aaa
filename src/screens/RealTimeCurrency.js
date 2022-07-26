@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {Children, useEffect, useRef, useState} from 'react';
 import {Animated, ActivityIndicator, FlatList, Image, Text, View} from "react-native";
 import {dataAPI} from "../api";
 import icons from "../constants/icons";
@@ -8,6 +8,15 @@ const RealTimeCurrency = () => {
 
     const fadeAnim = new Animated.Value(0)
 
+    const Layout = ({children}) => {
+        return (
+            <View style={{
+                width: 70
+            }}>
+                {children}
+            </View>
+        )
+    }
 
     useEffect(() => {
         const list = dataAPI.getQuotesTick()
@@ -74,53 +83,48 @@ const RealTimeCurrency = () => {
                                     backgroundColor: background
                                 }}>
                                     {/*Symbol*/}
-                                    <View
-                                        style={{
-                                            width: 70
-                                        }}
-                                    >
+                                    <Layout>
                                         <Text
                                             style={{
                                                 fontSize: 16
                                             }}>
                                             {item.symbol}
                                         </Text>
-                                    </View>
+                                    </Layout>
                                     {/*Ask*/}
-                                    <View style={{
-                                        width: 60,
-                                    }}>
+                                    <Layout>
                                         <Text style={{
                                             flex: 1,
                                             fontSize: 16,
-                                            width: 60
+                                            top: 8,
+                                            right: 5
                                         }}>
                                             {item.ask}
                                         </Text>
-                                    </View>
+                                    </Layout>
 
                                     {/*Change*/}
-                                    <View style={{
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
+                                    <Layout style={{
                                     }}>
                                         <Text
                                             style={{
                                                 color: priceColor,
-                                                fontSize: 16,
-                                                width: 60
+                                                fontSize: 16
                                             }}
                                         >
                                             {item.change24h}
                                         </Text>
-                                    </View>
+                                    </Layout>
 
-                                    <View style={{
+                                    <Layout style={{
                                         flexDirection: 'row',
                                     }}>
                                         <Text style={{
                                             textAlign: 'right',
-                                            width: 50
+                                            justifyContent: 'center',
+                                            top: 8,
+                                            width: 50,
+                                            left: 5
                                         }}>
                                             {item.change24h.toFixed(2)}
                                         </Text>
@@ -131,13 +135,14 @@ const RealTimeCurrency = () => {
                                                 style={{
                                                     width: 20,
                                                     height: 20,
+                                                    bottom: 8,
                                                     tintColor: priceColor,
                                                     transform: item.change24h > 0 ? [{rotate: "45deg"}] : [{rotate: "125deg"}]
                                                 }}
                                             />
                                         }
 
-                                    </View>
+                                    </Layout>
                                 </Animated.View>
                             )
                         }}
